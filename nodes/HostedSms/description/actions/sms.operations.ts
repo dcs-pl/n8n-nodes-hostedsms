@@ -45,7 +45,7 @@ export const smsOperations: INodeProperties[] = [
 
 export const smsFields: INodeProperties[] = [
 	{
-		displayName: 'Sender',
+		displayName: 'Sender Name or ID',
 		name: 'from',
 		type: 'options',
 		typeOptions: {
@@ -64,7 +64,7 @@ export const smsFields: INodeProperties[] = [
 				],
 			},
 		},
-		description: 'The sender name (must be pre-approved in hostedsms.pl)',
+		description: 'The sender name (must be pre-approved in hostedsms.pl). Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 	},
 	{
 		displayName: 'To',
@@ -107,7 +107,7 @@ export const smsFields: INodeProperties[] = [
 		displayName: 'Limit',
 		name: 'limit',
 		type: 'number',
-		default: 5,
+		default: 50,
 		typeOptions: {
 			minValue: 1,
 			maxValue: 100,
@@ -122,6 +122,6 @@ export const smsFields: INodeProperties[] = [
 				],
 			},
 		},
-		description: 'The maximum number of messages to return',
+		description: 'Max number of results to return',
 	},
 ];

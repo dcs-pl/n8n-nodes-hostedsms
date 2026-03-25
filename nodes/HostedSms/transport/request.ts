@@ -8,6 +8,8 @@ import type {
 	ILoadOptionsFunctions,
 	IHttpRequestOptions,
 	IHttpRequestMethods,
+	INode,
+	JsonObject,
 } from 'n8n-workflow';
 
 /**
@@ -48,18 +50,18 @@ export async function hostedsmsApiRequest(
 		options,
 	)) as IDataObject | IDataObject[];
 
-	const node = (this as any).getNode ? (this as any).getNode() : undefined;
+	const node = this.getNode();
 
 	if (responseData && !Array.isArray(responseData) && typeof responseData === 'object') {
 		if (responseData.ErrorMessage) {
-			throw new NodeApiError(node, responseData as any, {
+			throw new NodeApiError(node as INode, responseData as JsonObject, {
 				message: responseData.ErrorMessage as string,
 			});
 		}
 	} else if (Array.isArray(responseData)) {
 		for (const item of responseData) {
 			if (item.ErrorMessage) {
-				throw new NodeApiError(node, item as any, {
+				throw new NodeApiError(node as INode, item as JsonObject, {
 					message: item.ErrorMessage as string,
 				});
 			}

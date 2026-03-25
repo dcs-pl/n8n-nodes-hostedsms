@@ -15,17 +15,48 @@ import {
 } from './transport/request';
 
 import {
-	hostedSmsDescription,
-} from './description/HostedSmsDescription';
+	smsOperations,
+	smsFields,
+} from './description/actions/sms.operations';
+
+import {
+	smsResource,
+} from './description/sms.resource';
+
+
 
 export class HostedSms implements INodeType {
-	description: INodeTypeDescription = hostedSmsDescription;
+	description: INodeTypeDescription = {
+		displayName: 'HostedSMS',
+		name: 'hostedSms',
+		icon: 'file:hostedsms.svg',
+		group: ['transform'],
+		version: 1,
+		description: 'Send SMS via HostedSMS.pl',
+		defaults: {
+			name: 'HostedSMS',
+		},
+		inputs: ['main'],
+		outputs: ['main'],
+		credentials: [
+			{
+				name: 'hostedSmsApi',
+				required: true,
+			},
+		],
+		properties: [
+			...smsResource,
+			...smsOperations,
+			...smsFields,
+		],
+		usableAsTool: true,
+	};
 
 	methods = {
 		loadOptions: {
 			async getSenders(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
-				const responseData = await hostedsmsApiRequest.call(this, 'GET', '/ValidSenders');
-				const senders = (responseData as any).Senders as string[];
+				const responseData = await hostedsmsApiRequest.call(this, 'GET', '/ValidSenders') as IDataObject;
+				const senders = responseData.Senders as string[];
 				return senders.sort().map((sender) => ({
 					name: sender,
 					value: sender,
@@ -64,7 +95,7 @@ export class HostedSms implements INodeType {
 					} else if (operation === 'receive') {
 						const limit = this.getNodeParameter('limit', i) as number;
 
-						const qs: any = {
+						const qs: IDataObject = {
 							Limit: limit,
 						};
 

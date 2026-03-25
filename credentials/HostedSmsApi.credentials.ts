@@ -1,5 +1,6 @@
 import type {
 	IAuthenticateGeneric,
+	Icon,
 	ICredentialTestRequest,
 	ICredentialType,
 	INodeProperties,
@@ -9,6 +10,8 @@ export class HostedSmsApi implements ICredentialType {
 	name = 'hostedSmsApi';
 
 	displayName = 'HostedSMS API';
+
+	icon: Icon = 'file:hostedsms.svg';
 
 	documentationUrl = 'https://hostedsms.pl/pl/api-sms/opis-techniczny-api/';
 
