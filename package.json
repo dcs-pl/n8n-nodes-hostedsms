@@ -1,6 +1,6 @@
 {
     "name": "n8n-nodes-hostedsms",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "n8n community node for HostedSMS.pl integration",
     "license": "MIT",
     "homepage": "https://hostedsms.pl",
